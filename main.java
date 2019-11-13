@@ -1,9 +1,9 @@
 /*
-Develeloped by Kieran W on the 01/02/2019
+Developed by Kieran W on the 01/02/2019
 */
 /*
-* The aim of this Java project is to parse a file with extention .b or .bf 
-* and to produce an interpreter for the 'Brainfuck' programming language
+* The aim of this Java project is to parse a file with extension .b or .bf
+* and to produce an interpreter for the 'Brainf' programming language
 */
 
 import java.io.IOException;
@@ -12,14 +12,14 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Scanner;
 
-class Brainfuck {
+class Brainf {
 
     // Errors
-    final static String ERR_FILE_IS_INVALID = "ERROR: The specified file " + 
+    final static String ERR_FILE_IS_INVALID = "ERROR: The specified file " +
     "does not exist (filename: %s)";
-    final static String ERR_FILE_IS_NULL = "ERROR: The specified file does " + 
+    final static String ERR_FILE_IS_NULL = "ERROR: The specified file does " +
     "not contain any text (filename: %s)";
-    final static String ERR_POINTER_LT_ZERO = "ERROR: The pointer cannot be " + 
+    final static String ERR_POINTER_LT_ZERO = "ERROR: The pointer cannot be " +
     "less than zero (instruction: %d, %s)";
     final static String ERR_POINTER_GT_MAX = "ERROR: The pointer cannot be "
     + "greater than the size of the array (array_size: %d instruction: %d, %s)";
@@ -34,13 +34,13 @@ class Brainfuck {
 
     // Warnings
     final static String WARN_FILE_MAY_BE_INVALID = "WARN: The specified file "
-    + "may not be a 'Brainf*ck' file as it does not have the extention .b or " + 
+    + "may not be a 'Brainf*ck' file as it does not have the extension .b or " +
     ".bf (filename: %s)";
     final static String WARN_HIGH_INPUT = "WARN: This program is requesting " +
     "too much input from the user (instruction: %d, %s pointer: %d limit: %d)";
 
     // Information
-    final static String INFO_EXECUTION_COMPLETE = "INFO: Code executed " + 
+    final static String INFO_EXECUTION_COMPLETE = "INFO: Code executed " +
     "successfully";
 
     final static String INPUT_MSG = "INFO: Input requested (type: %s) ";
@@ -58,62 +58,62 @@ class Brainfuck {
         String dirtyInput = "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-" +
         "]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.";
         String cleanOutput = syntaxCleaner(dirtyInput);
-        brainfuckInterpreter(cleanOutput, MODE.INT);
-        brainfuckInterpreter(syntaxCleaner(fileReader("helloWorld.bf")), MODE.ASCII);
-        brainfuckInterpreter((fileReader("helloWorldComments.bf")), MODE.ASCII);
+        brainfInterpreter(cleanOutput, MODE.INT);
+        brainfInterpreter(syntaxCleaner(fileReader("helloWorld.bf")), MODE.ASCII);
+        brainfInterpreter((fileReader("helloWorldComments.bf")), MODE.ASCII);
 
-        // Test input command and run 'countdown' twice 
-        brainfuckInterpreter(syntaxCleaner(fileReader("countdown.bf")), MODE.INT);
-        brainfuckInterpreter(syntaxCleaner(fileReader("countdown.bf")), MODE.INT);
+        // Test input command and run 'countdown' twice
+        brainfInterpreter(syntaxCleaner(fileReader("countdown.bf")), MODE.INT);
+        brainfInterpreter(syntaxCleaner(fileReader("countdown.bf")), MODE.INT);
 
         // Run subtract (5 - 3 = 2)
-        brainfuckInterpreter(syntaxCleaner(fileReader("subtract.bf")), MODE.INT);
+        brainfInterpreter(syntaxCleaner(fileReader("subtract.bf")), MODE.INT);
 
         // Run multiply (5 * 3 = 15)
-        brainfuckInterpreter(syntaxCleaner(fileReader("multiply.bf")), MODE.INT);
+        brainfInterpreter(syntaxCleaner(fileReader("multiply.bf")), MODE.INT);
 
         // Run divide (12 / 3 = 4)
-        brainfuckInterpreter(syntaxCleaner(fileReader("divide.bf")), MODE.INT);
+        brainfInterpreter(syntaxCleaner(fileReader("divide.bf")), MODE.INT);
 
         // I can't seem to get these working  :(
-        //brainfuckInterpreter(syntaxCleaner(fileReader("rot13.bf")), MODE.ASCII);
-        //brainfuckInterpreter(syntaxCleaner(fileReader("truth.bf")), MODE.INT);
+        //brainfInterpreter(syntaxCleaner(fileReader("rot13.bf")), MODE.ASCII);
+        //brainfInterpreter(syntaxCleaner(fileReader("truth.bf")), MODE.INT);
     }
 
     /*
-     * Read in an input file (specified by a relative path, in the form of a 
+     * Read in an input file (specified by a relative path, in the form of a
      * string) and return a string of the contents
      */
-    public static String fileReader(String filepath) {
+    public static String fileReader(String filePath) {
         String fileContents = null;
         try{
-            fileContents = new String(Files.readAllBytes(Paths.get(filepath)));
+            fileContents = new String(Files.readAllBytes(Paths.get(filePath)));
         }
         catch(IOException e){
             // If there is an IOException, the file can be assumed to be invalid
-            System.out.println(String.format(ERR_FILE_IS_INVALID, filepath));
+            System.out.println(String.format(ERR_FILE_IS_INVALID, filePath));
         }
-        // Print an error if the file has no content 
+        // Print an error if the file has no content
         if(fileContents == null || fileContents.length() == 0){
-            System.out.println(String.format(ERR_FILE_IS_NULL, filepath));
+            System.out.println(String.format(ERR_FILE_IS_NULL, filePath));
         }
 
-        // Get the extension 
+        // Get the extension
         String extension = "";
-        int periodLocation = filepath.lastIndexOf('.');
+        int periodLocation = filePath.lastIndexOf('.');
         if (periodLocation > 0) {
-            extension = filepath.substring(periodLocation+1);
+            extension = filePath.substring(periodLocation+1);
         }
         if(!(extension.contentEquals("b") || extension.contentEquals("bf"))){
             // Provide a warning if the file does not appear to be in 'Brainf*ck'
-            System.out.println(String.format(WARN_FILE_MAY_BE_INVALID, filepath));
+            System.out.println(String.format(WARN_FILE_MAY_BE_INVALID, filePath));
         }
 
         return fileContents;
     }
 
     /*
-     * The purpose of this function is to strip non brainfuck syntax, this is to
+     * The purpose of this function is to strip non brainf syntax, this is to
      * make the program more modular. The syntax is "< > + - . , [ ]"
      */
     public static String syntaxCleaner(String fileContents) {
@@ -123,12 +123,12 @@ class Brainfuck {
         int legalCharsLen = legalChars.length;
         StringBuffer cleanSyntax = new StringBuffer();
         // For every character in the input string...
-        for (int syntaxPointer = 0; syntaxPointer < fileContentsLen; 
+        for (int syntaxPointer = 0; syntaxPointer < fileContentsLen;
         syntaxPointer++) {
             // ...Select the char at the position of the pointer
             char element = fileContents.charAt(syntaxPointer);
             // ...And compare it to each char in the legalChars array
-            for (int legalPointer = 0; legalPointer < legalCharsLen; 
+            for (int legalPointer = 0; legalPointer < legalCharsLen;
             legalPointer++) {
                 if (element == legalChars[legalPointer]) {
                     // Add the char to the output if it is part of the syntax
@@ -140,10 +140,10 @@ class Brainfuck {
     }
 
     /*
-     * The purpose of this function is to take the cleaned syntax and execute 
+     * The purpose of this function is to take the cleaned syntax and execute
      * the appropriate function based on this
      */
-    public static void brainfuckInterpreter(String instruction, MODE mode) {
+    public static void brainfInterpreter(String instruction, MODE mode) {
         // Define variables
         int[] array = new int[MAX_SIZE];
         int arrayPointer = 0;
@@ -161,7 +161,7 @@ class Brainfuck {
                 if (arrayPointer != 0) {
                     arrayPointer--;
                 } else {
-                    System.out.println(String.format(ERR_POINTER_LT_ZERO, 
+                    System.out.println(String.format(ERR_POINTER_LT_ZERO,
                     instructionPointer, currentInstruction));
                     return;
                 }
@@ -173,7 +173,7 @@ class Brainfuck {
                     arrayPointer++;
                 } else {
                     System.out.println(
-                            String.format(ERR_POINTER_GT_MAX, MAX_SIZE, 
+                            String.format(ERR_POINTER_GT_MAX, MAX_SIZE,
                             instructionPointer, currentInstruction));
                     return;
                 }
@@ -184,7 +184,7 @@ class Brainfuck {
                 if (value > Integer.MIN_VALUE) {
                     array[arrayPointer]--;
                 } else {
-                    System.out.println(String.format(ERR_VALUE_LT_MIN, 
+                    System.out.println(String.format(ERR_VALUE_LT_MIN,
                     instructionPointer, currentInstruction, arrayPointer));
                     return;
                 }
@@ -195,7 +195,7 @@ class Brainfuck {
                 if (value < Integer.MAX_VALUE) {
                     array[arrayPointer]++;
                 } else {
-                    System.out.println(String.format(ERR_VALUE_GT_MAX, 
+                    System.out.println(String.format(ERR_VALUE_GT_MAX,
                     instructionPointer, currentInstruction, arrayPointer));
                     return;
                 }
@@ -213,8 +213,8 @@ class Brainfuck {
                         break;
                     }
                 }
-                    
-                
+
+
             }
 
             // Define , operator
@@ -235,17 +235,17 @@ class Brainfuck {
 
                 // Terminate if input is called too many times
                 if(inputCounter >= MAX_INPUT * 0.75){
-                    System.out.println(String.format(WARN_HIGH_INPUT, 
+                    System.out.println(String.format(WARN_HIGH_INPUT,
                     instructionPointer, currentInstruction, arrayPointer, MAX_INPUT));
                 }
                 if(inputCounter >= MAX_INPUT){
-                    System.out.println(String.format(ERR_EXCEEDED_INPUT, 
+                    System.out.println(String.format(ERR_EXCEEDED_INPUT,
                     instructionPointer, currentInstruction, arrayPointer, MAX_INPUT));
                     reader.close();
                     return;
                 }
 
-                
+
                 //reader.close();
             }
 
@@ -304,7 +304,7 @@ class Brainfuck {
                 }
             }
 
-            
+
             // Increment the instruction
             instructionPointer++;
         }
