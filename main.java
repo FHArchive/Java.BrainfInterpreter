@@ -1,3 +1,4 @@
+// 2>/dev/null; /usr/bin/java $0 $@; exit $?
 /*
 Developed by Kieran W on the 01/02/2019
 */
@@ -34,7 +35,7 @@ class Brainf {
 
     // Warnings
     final static String WARN_FILE_MAY_BE_INVALID = "WARN: The specified file "
-    + "may not be a 'Brainf*ck' file as it does not have the extension .b or " +
+    + "may not be a 'Brainf' file as it does not have the extension .b or " +
     ".bf (filename: %s)";
     final static String WARN_HIGH_INPUT = "WARN: This program is requesting " +
     "too much input from the user (instruction: %d, %s pointer: %d limit: %d)";
@@ -105,7 +106,7 @@ class Brainf {
             extension = filePath.substring(periodLocation+1);
         }
         if(!(extension.contentEquals("b") || extension.contentEquals("bf"))){
-            // Provide a warning if the file does not appear to be in 'Brainf*ck'
+            // Provide a warning if the file does not appear to be in 'Brainf'
             System.out.println(String.format(WARN_FILE_MAY_BE_INVALID, filePath));
         }
 
