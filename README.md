@@ -1,18 +1,18 @@
 
 <p float="left">
 <a href="../../"><img src="https://img.shields.io/github/languages/top/FredHappyface/Java.BrainfInterpreter.svg?style=flat-square" alt="Github top language"></a>
-<a href="https://www.codacy.com/manual/FredHappyface/Java.BrainfInterpreter"><img src="https://img.shields.io/codacy/grade/[codacy-proj-id].svg?style=flat-square" alt="Codacy grade"></a>
-<a href="https://www.codacy.com/manual/FredHappyface/Java.BrainfInterpreter"><img src="https://img.shields.io/codacy/coverage/[codacy-proj-id].svg?style=flat-square" alt="Codacy coverage"></a>
+<a href="https://www.codacy.com/manual/FredHappyface/Java.BrainfInterpreter"><img src="https://img.shields.io/codacy/grade/2dab8f7a04184d8d87622461184df74f.svg?style=flat-square" alt="Codacy grade"></a>
+<a href="https://www.codacy.com/manual/FredHappyface/Java.BrainfInterpreter"><img src="https://img.shields.io/codacy/coverage/2dab8f7a04184d8d87622461184df74f.svg?style=flat-square" alt="Codacy coverage"></a>
 <a href="../../"><img src="https://img.shields.io/github/repo-size/FredHappyface/Java.BrainfInterpreter.svg?style=flat-square" alt="Repository size"></a>
 <a href="../../issues"><img src="https://img.shields.io/github/issues/FredHappyface/Java.BrainfInterpreter.svg?style=flat-square" alt="Issues"></a>
 <a href="/LICENSE.md"><img src="https://img.shields.io/github/license/FredHappyface/Java.BrainfInterpreter.svg?style=flat-square" alt="License"></a>
 <a href="../../commits/master"><img src="https://img.shields.io/github/commit-activity/m/FredHappyface/Java.BrainfInterpreter.svg?style=flat-square" alt="Commit activity"></a>
-<a href="../../commits/master"><img src="https://img.shields.io/github/last-commit/FredHappyface/Java.BrainfInterpreter.svg?"style=flat-square" alt="Last commit"></a>
+<a href="../../commits/master"><img src="https://img.shields.io/github/last-commit/FredHappyface/Java.BrainfInterpreter.svg?style=flat-square" alt="Last commit"></a>
 </p>
 
 # Java.BrainfInterpreter
 
-<img src="readme-assets/icons/proj-icon.png" alt="Project Icon" width="100">
+<img src="readme-assets/icons/name.png" alt="Project Icon" width="750">
 
 The aim of this Java project is to parse a file with extention .b or .bf and to
 produce an interpreter for the 'Brainf' programming language.
